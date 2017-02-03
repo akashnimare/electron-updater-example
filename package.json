@@ -13,11 +13,11 @@
     "electron-updater": "^1.4.2"
   },
   "build": {
-    "appId": "com.github.iffy.electronupdaterexample",
+    "appId": "com.github.akashnimare.electronupdaterexample",
     "publish": [
       {
         "provider": "github",
-        "owner": "iffy",
+        "owner": "akashnimare",
         "repo": "electron-updater-example"
       }
     ],
