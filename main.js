@@ -3,7 +3,7 @@
 
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
-const {autoUpdater} = require("electron-updater").autoUpdater;
+const {autoUpdater} = require("electron-updater");
 
 //-------------------------------------------------------------------
 // Logging
@@ -93,14 +93,16 @@ autoUpdater.on('download-progress', (ev, progressObj) => {
   log.info('progressObj', progressObj);
 })
 autoUpdater.on('update-downloaded', (ev, info) => {
-  sendStatus('Update downloaded.  Will quit and install in 5 seconds.');
+  sendStatus('Update downloaded.  Will quit and install in 5 seconds.' + info.releaseName);
+  sendStatus('releaseName is' + info.releaseName);
+  sendStatus('releaseNotes is' + info.releaseNotes);
   log.info('info', info);
   // Wait 5 seconds, then quit and install
   setTimeout(function() {
-    autoUpdater.quitAndInstall();  
-  }, 5000)
+    autoUpdater.quitAndInstall();
+  }, 515000)
 })
-// Wait a second for the window to exist before checking for updates.
+// Wait a second for the window to exist efore checking for updates.
 setTimeout(function() {
-  autoUpdater.checkForUpdates()  
+  autoUpdater.checkForUpdates()
 }, 1000);
