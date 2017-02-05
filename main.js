@@ -3,7 +3,7 @@
 
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
-const {autoUpdater} = require("electron-updater");
+const {autoUpdater} = require("electron-updater").autoUpdater;
 
 //-------------------------------------------------------------------
 // Logging
