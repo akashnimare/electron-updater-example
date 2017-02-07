@@ -1,7 +1,7 @@
 // Copyright (c) The LHTML team
 // See LICENSE for details.
 
-const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu, protocol, ipcMain, dialog} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
@@ -93,15 +93,31 @@ autoUpdater.on('download-progress', (ev, progressObj) => {
   log.info('progressObj', progressObj);
 })
 autoUpdater.on('update-downloaded', (ev, info) => {
-  sendStatus('Update downloaded.  Will quit and install in 5 seconds.' + info.releaseName);
-  sendStatus('releaseName is' + info.releaseName);
-  sendStatus('releaseNotes is' + info.releaseNotes);
+  sendStatus('Update downloaded.  Will quit and install in 5 seconds.');
   log.info('info', info);
-  // Wait 5 seconds, then quit and install
-  setTimeout(function() {
-    autoUpdater.quitAndInstall();
-  }, 515000)
-})
+// let message = app.getName() + ' ' + info.releaseName + ' is now available. It will be installed the next time you restart the application.';
+		// if (info.releaseNotes) {
+		// 	const splitNotes = info.releaseNotes.split(/[^\r]\n/);
+		// 	message += '\n\nRelease notes:\n';
+		// 	splitNotes.forEach(notes => {
+		// 		message += notes + '\n\n';
+		// 	});
+		// }
+		// Ask user to update the app
+		dialog.showMessageBox({
+			type: 'question',
+			buttons: ['Install and Relaunch', 'Later'],
+			defaultId: 0,
+			message: 'A new version of ' + app.getName() + ' has been downloaded',
+			detail: "It will be installed the next time you restart the application"
+		}, response => {
+			if (response === 0) {
+				setTimeout(() => autoUpdater.quitAndInstall(), 1);
+			}
+		});
+	}
+
+ )
 // Wait a second for the window to exist efore checking for updates.
 setTimeout(function() {
   autoUpdater.checkForUpdates()
