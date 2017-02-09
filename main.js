@@ -78,7 +78,13 @@ autoUpdater.on('checking-for-update', () => {
 })
 autoUpdater.on('update-available', (ev, info) => {
   sendStatus('Update available.');
-  log.info('info', info);
+  sendStatus(info.releaseName);
+  sendStatus(info.version);
+  sendStatus(info.releaseNotes);
+  log.info('info', info.releaseName);
+  log.info('ReleaseNotes',info.releaseNotes);
+  log.info('ReleaseName', info.releaseName);
+  log.info('version', info.version);
 })
 autoUpdater.on('update-not-available', (ev, info) => {
   sendStatus('Update not available.');
@@ -95,9 +101,6 @@ autoUpdater.on('download-progress', (ev, progressObj) => {
 autoUpdater.on('update-downloaded', (ev, info) => {
   sendStatus('Update downloaded.  Will quit and install in 5 seconds.');
   log.info('info', info);
-  log.info('ReleaseNotes',info.releaseNotes);
-  log.info('ReleaseName', info.releaseName);
-  log.info('version', info.version);
 
 let message = app.getName() + ' ' + info.releaseName + ' is now available. It will be installed the next time you restart the application.';
 		if (info.releaseNotes) {
