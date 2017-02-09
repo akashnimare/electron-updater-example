@@ -95,14 +95,17 @@ autoUpdater.on('download-progress', (ev, progressObj) => {
 autoUpdater.on('update-downloaded', (ev, info) => {
   sendStatus('Update downloaded.  Will quit and install in 5 seconds.');
   log.info('info', info);
-// let message = app.getName() + ' ' + info.releaseName + ' is now available. It will be installed the next time you restart the application.';
-		// if (info.releaseNotes) {
-		// 	const splitNotes = info.releaseNotes.split(/[^\r]\n/);
-		// 	message += '\n\nRelease notes:\n';
-		// 	splitNotes.forEach(notes => {
-		// 		message += notes + '\n\n';
-		// 	});
-		// }
+  log.info('ReleaseNotes',info.releaseNotes);
+  log.info('ReleaseName', info.releaseName);
+
+let message = app.getName() + ' ' + info.releaseName + ' is now available. It will be installed the next time you restart the application.';
+		if (info.releaseNotes) {
+			const splitNotes = info.releaseNotes.split(/[^\r]\n/);
+			message += '\n\nRelease notes:\n';
+			splitNotes.forEach(notes => {
+				message += notes + '\n\n';
+			});
+		}
 		// Ask user to update the app
 		dialog.showMessageBox({
 			type: 'question',
@@ -121,4 +124,4 @@ autoUpdater.on('update-downloaded', (ev, info) => {
 // Wait a second for the window to exist efore checking for updates.
 setTimeout(function() {
   autoUpdater.checkForUpdates()
-}, 1000);
+}, 9000);
